@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yoʻl Avtomaktabi — taqdimot</title>
+<style>
+:root{
+  --bg:#f4f4f1; --surface:#ffffff; --ink:#1b1d21; --muted:#5d636d; --line:#d9dbd6;
+  --accent:#f5b800; --accent-ink:#1b1d21; --ok:#177a45; --warn:#c0392b; --asphalt:#26292f;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --surface:#202329; --ink:#f1f1ee; --muted:#a3a9b3; --line:#363a42;
+    --asphalt:#0f1114; --ok:#4cc380; --warn:#ff7b6b; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --surface:#202329; --ink:#f1f1ee; --muted:#a3a9b3; --line:#363a42;
+  --asphalt:#0f1114; --ok:#4cc380; --warn:#ff7b6b; color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+.deck{height:100%;overflow:hidden;position:relative}
+.track{display:flex;height:100%;transition:transform .35s ease}
+@media (prefers-reduced-motion:reduce){.track{transition:none}}
+.slide{flex:0 0 100%;height:100%;overflow-y:auto;padding:22px 18px 110px}
+.inner{max-width:520px;margin:0 auto}
+h1{font-size:2.2rem;line-height:1.08;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.6rem;line-height:1.15;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0 0 18px}
+.cover{background:var(--asphalt);color:#fff;border-radius:22px;padding:30px 22px 40px;position:relative;overflow:hidden;margin-top:36px}
+.cover .lead{color:#d6d8dc}
+.lane{position:absolute;left:0;right:0;bottom:14px;height:4px;background:repeating-linear-gradient(90deg,var(--accent) 0 28px,transparent 28px 52px)}
+.badge{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:4px 12px;border-radius:6px;font-size:.85rem;margin-bottom:14px}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;font:inherit;font-weight:700;padding:14px 16px;border-radius:12px;border:2px solid transparent;cursor:pointer;margin-top:10px;color:inherit;background:none}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{border-color:var(--line)}
+.cover .btn.ghost{border-color:#555b66;color:#fff}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.facts,.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.fact b{display:block;font-size:1.8rem;line-height:1.1}
+.fact span{color:var(--muted);font-size:.9rem}
+.adv{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.adv li{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:10px;padding:14px}
+.cat{display:flex;gap:12px;align-items:center;padding:12px 14px}
+.cat i{font-style:normal;font-weight:800;font-size:1.4rem;background:var(--accent);color:var(--accent-ink);border-radius:8px;min-width:42px;height:42px;display:grid;place-items:center}
+.cat span{font-size:.9rem;line-height:1.3}
+.wide{grid-column:1/-1}
+.groups{display:grid;gap:10px}
+.group{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.group small{color:var(--muted);display:block}
+.seats{font-size:.85rem;font-weight:700;color:var(--ok);white-space:nowrap}
+.seats.few{color:var(--warn)}
+.extra{display:flex;flex-wrap:wrap;gap:8px}
+.extra span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 15px}
+form{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+label{display:block;font-weight:600;font-size:.9rem;margin:12px 0 5px}
+label:first-child{margin-top:0}
+input,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.note{color:var(--muted);font-size:.82rem;margin:10px 0 0}
+.done{display:none;text-align:center;padding:20px 6px}
+.done .tick{font-size:2.4rem;color:var(--ok)}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px}
+.bar .arrow{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:1.2rem;cursor:pointer;flex:none}
+.bar .arrow:disabled{opacity:.35;cursor:default}
+.mid{flex:1;text-align:center;min-width:0}
+.mid .t{font-weight:700;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.dots button{width:9px;height:9px;padding:0;border-radius:50%;border:0;background:var(--line);cursor:pointer}
+.dots button[aria-current="true"]{background:var(--accent);width:22px;border-radius:5px}
+.theme{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:10px;z-index:6;background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:4px 10px;font:inherit;font-size:.8rem;cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" type="button">Kun / tun</button>
+
+<main class="deck" id="deck">
+<div class="track" id="track">
+
+  <section class="slide" data-title="Bosh sahifa"><div class="inner">
+    <div class="cover">
+      <span class="badge">Barcha toifalar: A, B, C, D, E</span>
+      <h1>Yoʻl Avtomaktabi</h1>
+      <p class="lead">Haydovchilikni ishonch bilan oʻrganing. Taqdimotni varaqlab, bizni 2 daqiqada taniysiz.</p>
+      <button class="btn primary" data-go="next" type="button">Taqdimotni boshlash</button>
+      <button class="btn ghost" data-go="6" type="button">Darhol ariza qoldirish</button>
+      <div class="lane" aria-hidden="true"></div>
+    </div>
+  </div></section>
+
+  <section class="slide" data-title="Biz haqimizda"><div class="inner">
+    <h2>Biz haqimizda</h2>
+    <p class="lead">Raqamlar bilan qisqacha.</p>
+    <div class="facts">
+      <div class="card fact"><b>2 500+</b><span>bitiruvchilar</span></div>
+      <div class="card fact"><b>87%</b><span>birinchi urinishda imtihondan oʻtadi</span></div>
+      <div class="card fact"><b>12 yil</b><span>faoliyat tajribasi</span></div>
+      <div class="card fact"><b>25 ta</b><span>oʻquv avtomobili</span></div>
+    </div>
+  </div></section>
+
+  <section class="slide" data-title="Afzalliklar"><div class="inner">
+    <h2>Nega bizni tanlashadi</h2>
+    <p class="lead">Besh asosiy afzallik.</p>
+    <ul class="adv">
+      <li>Tajribali va sabrli oʻqituvchilar</li>
+      <li>Yangi oʻquv avtomobillari</li>
+      <li>Imtihon yoʻnalishlarida amaliy mashgʻulot</li>
+      <li>Qulay vaqt: ertalab, kechqurun, dam olish kuni</li>
+      <li>Toʻlovni boʻlib-boʻlib toʻlash mumkin</li>
+    </ul>
+  </div></section>
+
+  <section class="slide" data-title="Toifalar"><div class="inner">
+    <h2>Oʻqitiladigan toifalar</h2>
+    <p class="lead">Barcha toifalar bir joyda.</p>
+    <div class="cats">
+      <div class="card cat"><i>A</i><span>Mototsikl va skuter</span></div>
+      <div class="card cat"><i>B</i><span>Yengil avtomobil</span></div>
+      <div class="card cat"><i>C</i><span>Yuk avtomobili</span></div>
+      <div class="card cat"><i>D</i><span>Avtobus</span></div>
+      <div class="card cat wide"><i>E</i><span>Tirkama bilan: BE, CE, DE</span></div>
+    </div>
+  </div></section>
+
+  <section class="slide" data-title="Oʻquv guruhlari"><div class="inner">
+    <h2>Mavjud oʻquv guruhlari</h2>
+    <p class="lead">Sizga qulay vaqtni tanlang.</p>
+    <div class="groups">
+      <div class="card group"><div><strong>Ertalabki guruh</strong><small>B toifa · Du–Ju, 08:00–10:00 · 18-noyabrdan</small></div><span class="seats">6 joy</span></div>
+      <div class="card group"><div><strong>Kechki guruh</strong><small>B toifa · Du–Ju, 18:30–20:30 · 20-noyabrdan</small></div><span class="seats few">2 joy</span></div>
+      <div class="card group"><div><strong>Dam olish kuni guruhi</strong><small>A va B toifa · Sh–Yak, 10:00–13:00 · 23-noyabrdan</small></div><span class="seats">9 joy</span></div>
+      <div class="card group"><div><strong>Yuk va avtobus guruhi</strong><small>C, D, E toifa · Du–Ju, 09:00–12:00 · 25-noyabrdan</small></div><span class="seats">5 joy</span></div>
+    </div>
+  </div></section>
+
+  <section class="slide" data-title="Qoʻshimcha xizmatlar"><div class="inner">
+    <h2>Qoʻshimcha xizmatlar</h2>
+    <p class="lead">Kerak boʻlsa, qoʻshib olasiz.</p>
+    <div class="extra">
+      <span>Qoʻshimcha amaliy dars</span><span>Imtihon oldi mashq</span>
+      <span>Avtomat uzatmalar qutisi</span><span>Hujjatlarni rasmiylashtirish</span>
+      <span>Onlayn nazariya testlari</span>
+    </div>
+  </div></section>
+
+  <section class="slide" data-title="Ariza va uchrashuv"><div class="inner">
+    <h2>Ariza va uchrashuv</h2>
+    <p class="lead">Raqamingizni qoldiring, menejer bogʻlanadi. Ofisga tashrif vaqtini ham belgilang.</p>
+    <form id="form" novalidate>
+      <label for="name">Ismingiz</label>
+      <input id="name" autocomplete="name" placeholder="Masalan: Aziz">
+      <label for="phone">Telefon raqam</label>
+      <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+998 90 123 45 67">
+      <label for="cat">Toifa</label>
+      <select id="cat"><option>A toifa</option><option selected>B toifa</option><option>C toifa</option><option>D toifa</option><option>E toifa</option></select>
+      <label for="group">Guruh</label>
+      <select id="group"><option>Ertalabki guruh</option><option>Kechki guruh</option><option>Dam olish kuni guruhi</option><option>Yuk va avtobus guruhi</option></select>
+      <label>Menejer bilan uchrashuv</label>
+      <div class="row">
+        <input id="date" type="date" aria-label="Sana">
+        <select id="time" aria-label="Vaqt"><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>17:00</option></select>
+      </div>
+      <button class="btn primary" type="submit">Arizani yuborish</button>
+      <p class="note" id="err" role="alert" style="color:var(--warn);display:none"></p>
+      <p class="note">Demo: ariza hozircha yuborilmaydi. Tayyor saytda u menejerning Telegramiga tushadi.</p>
+    </form>
+    <div class="done" id="done" role="status">
+      <div class="tick">✓</div>
+      <h2>Arizangiz qabul qilindi</h2>
+      <p class="lead" id="doneText"></p>
+      <button class="btn ghost" data-go="next" type="button">Bogʻlanish usullari</button>
+    </div>
+  </div></section>
+
+  <section class="slide" data-title="Bogʻlanish"><div class="inner">
+    <h2>Bogʻlanish</h2>
+    <p class="lead">Savolingiz boʻlsa, hoziroq yozing. Tez va tushunarli javob beramiz.</p>
+    <a class="btn primary" href="#">Telegramda yozish</a>
+    <a class="btn ghost" href="#">Instagram Direct</a>
+    <a class="btn ghost" href="#">Ofisga qoʻngʻiroq qilish</a>
+    <p class="note" style="text-align:center;margin-top:22px">Yoʻl Avtomaktabi · Namuna taqdimot (demo)</p>
+  </div></section>
+
+</div>
+</main>
+
+<nav class="bar" aria-label="Taqdimot navigatsiyasi">
+  <button class="arrow" id="prev" type="button" aria-label="Oldingi">←</button>
+  <div class="mid"><div class="t" id="ttl"></div><div class="dots" id="dots"></div></div>
+  <button class="arrow" id="next" type="button" aria-label="Keyingi">→</button>
+</nav>
+
+<script>
+(function(){
+  var track=document.getElementById('track'),
+      slides=[].slice.call(track.children),
+      dots=document.getElementById('dots'),
+      prev=document.getElementById('prev'), next=document.getElementById('next'),
+      ttl=document.getElementById('ttl'), cur=0, n=slides.length;
+
+  slides.forEach(function(s,i){
+    var b=document.createElement('button');
+    b.type='button'; b.setAttribute('aria-label',(i+1)+'-slayd: '+s.dataset.title);
+    b.addEventListener('click',function(){go(i)});
+    dots.appendChild(b);
+  });
+
+  function go(i){
+    cur=Math.max(0,Math.min(n-1,i));
+    track.style.transform='translateX(-'+(cur*100)+'%)';
+    [].forEach.call(dots.children,function(b,k){b.setAttribute('aria-current',k===cur?'true':'false')});
+    ttl.textContent=(cur+1)+' / '+n+' · '+slides[cur].dataset.title;
+    prev.disabled=cur===0; next.disabled=cur===n-1;
+    slides.forEach(function(s,k){s.setAttribute('aria-hidden',k===cur?'false':'true'); s.inert=k!==cur});
+    slides[cur].scrollTop=0;
+  }
+  prev.addEventListener('click',function(){go(cur-1)});
+  next.addEventListener('click',function(){go(cur+1)});
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-go]'); if(!t) return;
+    var v=t.getAttribute('data-go'); go(v==='next'?cur+1:+v);
+  });
+  document.addEventListener('keydown',function(e){
+    if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown') go(cur+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp') go(cur-1);
+  });
+  var sx=0, sy=0;
+  document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5) go(dx<0?cur+1:cur-1);
+  },{passive:true});
+
+  var d=document.getElementById('date'), t=new Date(); t.setDate(t.getDate()+1);
+  var iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+  d.min=iso; d.value=iso;
+
+  document.getElementById('theme').addEventListener('click',function(){
+    var r=document.documentElement, a=r.getAttribute('data-theme'),
+        dark=a==='dark'||(!a&&matchMedia('(prefers-color-scheme:dark)').matches);
+    r.setAttribute('data-theme',dark?'light':'dark');
+  });
+
+  document.getElementById('form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var nm=document.getElementById('name').value.trim(),
+        p=document.getElementById('phone').value.replace(/\D/g,''),
+        err=document.getElementById('err');
+    if(nm.length<2){err.textContent='Ismingizni yozing.';err.style.display='block';return}
+    if(p.length<9){err.textContent='Telefon raqamni toʻliq yozing.';err.style.display='block';return}
+    err.style.display='none';
+    document.getElementById('doneText').textContent=nm+', menejerimiz '+d.value+' kuni soat '+
+      document.getElementById('time').value+'da bogʻlanadi. '+document.getElementById('cat').value+
+      ', '+document.getElementById('group').value+'.';
+    document.getElementById('form').style.display='none';
+    document.getElementById('done').style.display='block';
+  });
+
+  go(0);
+})();
+</script>
+</body>
+</html>
